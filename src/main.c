@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 10:52:47 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/22 17:23:45 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/22 19:36:58 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,21 @@ void	input_handler(int argc, char **argv, t_mlx *mlx)
 	}
 }
 
+int		init_params(t_mlx *mlx)
+{
+	mlx->scale = 200;
+	mlx->center_x = 0.0;
+	mlx->center_y = 1.0;
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_mlx	mlx;
 
 	input_handler(argc, argv, &mlx);
 	ft_printf("%d", mlx.frac_type); //удалить
+	init_params(&mlx);
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WINDOW_W, WINDOW_H, "fractol");
 	mlx.img.img_ptr = mlx_new_image(mlx.mlx, WINDOW_W, WINDOW_H);
@@ -75,6 +84,5 @@ int		main(int argc, char **argv)
 	mlx_mouse_hook(mlx.win, mouse_controls, &mlx);
 	Mandelbrot(mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img.img_ptr, 0, 0);
-
 	mlx_loop(mlx.mlx);
 }

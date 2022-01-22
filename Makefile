@@ -9,6 +9,7 @@ TestingFlags := -fsanitize=address -g3
 FLAGS := -Wall -Wextra -Werror -Imlx -I./include -g3
 
 SRC_FILES = src/main.c src/mandelbrot.c src/controls.c \
+			src/render.c
 
 OBJ = $(patsubst %.c, %.o, $(SRC_FILES))
 

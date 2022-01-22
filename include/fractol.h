@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 11:11:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/22 16:34:28 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/22 19:36:05 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@
 # ifndef MB_MAX_ITER
 #  define MB_MAX_ITER 100
 # endif
+# ifndef MOVE_SCALE
+#  define MOVE_SCALE 3
+# endif
+
+# define UP 126
+# define DOWN 125
+# define LEFT 123
+# define RIGHT 124
+# define WHEEL_UP 5
+# define WHEEL_DOWN 4
 
 # define COLOR_WHITE #FFFFFF
 # define COLOR_BLACK	#000000
@@ -57,6 +67,9 @@ typedef struct	s_mlx
 	void		*win;
 	t_img		img;
 	char		frac_type;
+	double		center_x;
+	double		center_y;
+	double		scale;
 }		t_mlx;
 
 typedef struct	s_complex
