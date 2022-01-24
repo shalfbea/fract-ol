@@ -18,7 +18,8 @@ RM := rm -rf
 all: $(HEADER) $(NAME) $(OBJ)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit libftprintf.a -o $(NAME)
+	$(CC) $(OBJ) -framework OpenGL -framework AppKit libftprintf.a libmlx.a -o $(NAME)
+#$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit libftprintf.a libmlx.a -o $(NAME)
 
 bonus : $(NAME)
 

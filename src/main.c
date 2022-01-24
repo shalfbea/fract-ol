@@ -6,13 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 10:52:47 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/22 19:36:58 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/24 10:39:05 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fractol.h>
 
-int		mlx_close(t_mlx *mlx)
+int	mlx_close(t_mlx *mlx)
 {
 	mlx_destroy_image(mlx->mlx, mlx->img.img_ptr);
 	mlx_destroy_window(mlx->mlx, mlx->win);
@@ -46,7 +46,7 @@ void	input_handler(int argc, char **argv, t_mlx *mlx)
 {
 	mlx->frac_type = 1; //Заглушка
 	return; 			//
-	if(argc < 2)
+	if (argc < 2)
 		error_msg(0);
 	if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0 )
 		mlx->frac_type = 1;
@@ -59,15 +59,27 @@ void	input_handler(int argc, char **argv, t_mlx *mlx)
 	}
 }
 
-int		init_params(t_mlx *mlx)
+int	init_params(t_mlx *mlx)
 {
 	mlx->scale = 200;
 	mlx->center_x = 0.0;
-	mlx->center_y = 1.0;
+	mlx->center_y = 0.0;
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int	rerender(t_mlx *mlx)
+{
+	mlx_destroy_image(mlx->mlx, mlx->img.img_ptr);
+	mlx_clear_window(mlx->mlx, mlx->win);
+	mlx->img.img_ptr = mlx_new_image(mlx->mlx, WINDOW_W, WINDOW_H);
+	mlx->img.data = (int *)mlx_get_data_addr(mlx->img.img_ptr, &(mlx->img.bpp),
+			&(mlx->img.size_l), &(mlx->img.endian));
+	mandelbrot(*mlx);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img_ptr, 0, 0);
+	return (0);
+}
+
+int main(int argc, char **argv)
 {
 	t_mlx	mlx;
 
@@ -77,12 +89,12 @@ int		main(int argc, char **argv)
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WINDOW_W, WINDOW_H, "fractol");
 	mlx.img.img_ptr = mlx_new_image(mlx.mlx, WINDOW_W, WINDOW_H);
-	mlx.img.data = (int *)mlx_get_data_addr(mlx.img.img_ptr, &mlx.img.bpp, &mlx.img.size_l,
-		&mlx.img.endian);
+	mlx.img.data = (int *)mlx_get_data_addr(mlx.img.img_ptr, &mlx.img.bpp,
+			&mlx.img.size_l, &mlx.img.endian);
 	mlx_hook(mlx.win, 17, 0, mlx_close, &mlx);
 	mlx_key_hook(mlx.win, key_controls, &mlx);
 	mlx_mouse_hook(mlx.win, mouse_controls, &mlx);
-	Mandelbrot(mlx);
+	mandelbrot(mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img.img_ptr, 0, 0);
 	mlx_loop(mlx.mlx);
 }
