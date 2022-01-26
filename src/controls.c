@@ -6,16 +6,11 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:39:34 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 19:31:53 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:05:50 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-void	set_render_area(t_mlx *mlx, int mode)
-{
-	return ;
-}
 
 void	moving(int key, t_mlx *mlx)
 {

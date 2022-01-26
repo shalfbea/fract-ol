@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 11:11:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 19:31:12 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:39:18 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #  define SCALE_FACTOR 3
 # endif
 # ifndef MOVING_FACTOR
-#  define MOVING_FACTOR 50
+#  define MOVING_FACTOR 200
 # endif
 
 # define UP 126
@@ -63,25 +63,30 @@ typedef struct s_complex
 	double	img;
 }	t_complex;
 
-typedef struct render_area
+//to delete
+typedef struct s_render_area
 {
 	int		x1;
 	int		x2;
 	int		y1;
 	int		y2;
-}	t_complex;
+}	t_render_area;
+
 
 typedef struct s_mlx
 {
-	void		*mlx;
-	void		*win;
-	t_img		img;
-	int			max_iter;
-	char		frac_type;
-	double		center_x;
-	double		center_y;
-	double		scale;
-	t_complex	julia_const;
+	void			*mlx;
+	void			*win;
+	t_img			img;
+	int				max_iter;
+	char			frac_type;
+	double			center_x;
+	double			center_y;
+	double			scale;
+	int				color_r;
+	int				color_g;
+	int				color_b;
+	t_complex		julia_const;
 }		t_mlx;
 
 //To delete
@@ -102,6 +107,8 @@ int			mlx_close(t_mlx *mlx);
 int			rerender(t_mlx *mlx);
 int			init_params(t_mlx *mlx);
 //inputs.c
-void	input_handler(int argc, char **argv, t_mlx *mlx);
-int		colorizer(t_complex z, int n, t_mlx mlx);
+void		input_handler(int argc, char **argv, t_mlx *mlx);
+//ft_strings.c
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_atoi(const char *str);
 #endif

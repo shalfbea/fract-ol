@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 10:52:47 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 18:42:18 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:00:18 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int	mlx_close(t_mlx *mlx)
 	exit(0);
 }
 
+void set_default_colors(t_mlx *mlx)
+{
+	//to_do
+}
+
 int	init_params(t_mlx *mlx)
 {
 	mlx->scale = 200;
@@ -27,6 +32,10 @@ int	init_params(t_mlx *mlx)
 	mlx->max_iter = INIT_MAX_ITER;
 	mlx->julia_const.img = 0.756;
 	mlx->julia_const.real = -0.1244;
+	mlx->color_r = 5;
+	mlx->color_g = 3;
+	mlx->color_b = 2;
+	//set_render_area(mlx, 0);
 	return (0);
 }
 

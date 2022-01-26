@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 19:36:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 19:19:53 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:59:40 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,41 @@ void	error_msg(int mode)
 	exit(0);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	choose_fractal(char *arg, t_mlx *mlx)
 {
-	size_t	i;
-
-	i = 0;
-	while ((i < n) && (s1[i] == s2[i]) && s1[i] && s2[i])
-		++i;
-	if (i == n)
-		return ((int) 0);
-	return ((unsigned char)s1[i] - s2[i]);
-}
-
-void	input_handler(int argc, char **argv, t_mlx *mlx)
-{
-	//mlx->frac_type = 1; //Заглушка
-	//return; 			//
-	if (argc < 2)
-		error_msg(0);
-	if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0)
+	if (ft_strncmp(arg, "Mandelbrot", 10) == 0)
 		mlx->frac_type = 1;
-	else if (ft_strncmp(argv[1], "Julia", 5) == 0)
+	else if (ft_strncmp(arg, "Julia", 5) == 0)
 		mlx->frac_type = 2;
-	else if (ft_strncmp(argv[1], "BurningShip", 11) == 0)
+	else if (ft_strncmp(arg, "BurningShip", 11) == 0)
 		mlx->frac_type = 3;
 	else
 	{
 		error_msg(1);
 		mlx->frac_type = 0;
+	}
+}
+
+void	input_handler(int argc, char **argv, t_mlx *mlx)
+{
+	int	i;
+
+	if (argc < 2)
+		error_msg(0);
+	choose_fractal(argv[1], mlx);
+	i = 2;
+	if (mlx->frac_type == 2 && argc > 3)
+	{
+		// Считать значения для фрактала Жулиа + добавить default
+	}
+	if (argc > i)
+	{
+		if (ft_strncmp(argv[i], "default", 7) == 0)
+			set_default_colors(mlx);
+		mlx->frac_type = 2;
+	}
+	if (argc > i + 2)
+	{
+
 	}
 }

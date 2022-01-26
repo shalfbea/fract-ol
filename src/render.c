@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:38:10 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 19:29:23 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:24:38 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	colorizer(t_complex z, int n, t_mlx mlx)
 	if (a < 0)
 		a = 0;
 	a = 8 * sqrt(a);
-	r = (int)(floor(a * 5)) % 256;
-	g = (int)(floor(a * 3)) % 256;
-	b = (int)(floor(a * 2)) % 256;
+	r = (int)(floor(a * mlx.color_r)) % 256;
+	g = (int)(floor(a * mlx.color_g)) % 256;
+	b = (int)(floor(a * mlx.color_b)) % 256;
 	return (*(int *)(unsigned char [4]){r, g, b, 0});
 }
 
