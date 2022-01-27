@@ -23,7 +23,7 @@ $(NAME): $(OBJ) $(HEADER)
 
 bonus : $(NAME)
 
-%.o: %.c
+%.o: %.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@
 
 testing : test

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:25:38 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 20:37:17 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/27 08:53:13 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,31 @@ int	ft_atoi(const char *str)
 			return (0);
 	}
 	return ((int) res * sign);
+}
+
+double	simple_atof(const char *str)
+{
+	double	res;
+	int		i;
+	int		k;
+	double	mantissa;
+
+	i = 0;
+	res = fabs((double)atoi(str));
+	while (str[i] && str[i] != '.')
+		++i;
+	if (str[i] != '.')
+		return (res);
+	mantissa = 0.0;
+	if (str[++i])
+	{
+		k = 0;
+		while (str[i] && k < 17)
+			mantissa += (str[i++] - '0') / pow(10, ++k);
+		res += mantissa;
+		ft_atoi_helper(str, &i);
+		if (i < 0)
+			res = -res;
+	}
+	return (res);
 }

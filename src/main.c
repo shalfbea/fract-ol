@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 10:52:47 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 21:00:18 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/27 21:10:59 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int	mlx_close(t_mlx *mlx)
 	exit(0);
 }
 
-void set_default_colors(t_mlx *mlx)
+void	set_default_colors(t_mlx *mlx)
 {
-	//to_do
+	mlx->color_r = 5;
+	mlx->color_g = 3;
+	mlx->color_b = 2;
 }
 
 int	init_params(t_mlx *mlx)
@@ -32,10 +34,7 @@ int	init_params(t_mlx *mlx)
 	mlx->max_iter = INIT_MAX_ITER;
 	mlx->julia_const.img = 0.756;
 	mlx->julia_const.real = -0.1244;
-	mlx->color_r = 5;
-	mlx->color_g = 3;
-	mlx->color_b = 2;
-	//set_render_area(mlx, 0);
+	set_default_colors(mlx);
 	return (0);
 }
 
@@ -51,13 +50,23 @@ int	rerender(t_mlx *mlx)
 	return (0);
 }
 
+void	debug_info(t_mlx *mlx)
+{
+	printf("Max iter: %d\n", mlx->max_iter);
+	printf("frac_type: %d\n", mlx->frac_type);
+	printf("center x, y: %f %f\n", mlx->center_x, mlx->center_y);
+	printf("Scale: %f\n", mlx->scale);
+	printf("RGB: %d %d %d\n", mlx->color_r, mlx->color_g, mlx->color_b);
+	printf("Julia const: %f %f\n", mlx->julia_const.real, mlx->julia_const.img);
+}
+
 int	main(int argc, char **argv)
 {
 	t_mlx	mlx;
 
-	input_handler(argc, argv, &mlx);
-	ft_printf("%d", mlx.frac_type); //удалить
 	init_params(&mlx);
+	input_handler(argc, argv, &mlx);
+	DebugInfo(&mlx);
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WINDOW_W, WINDOW_H, "fractol");
 	mlx.img.img_ptr = mlx_new_image(mlx.mlx, WINDOW_W, WINDOW_H);

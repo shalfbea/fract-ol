@@ -6,20 +6,19 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:38:10 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 20:24:38 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/27 21:14:55 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	colorizer(t_complex z, int n, t_mlx mlx)
+static int	colorizer(t_complex z, int n, t_mlx mlx)
 {
 	double			a;
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
 
-	(void) mlx; //delete
 	a = n + 2 - log(log(z.real * z.real + z.img * z.img)) / M_LN2;
 	if (a < 0)
 		a = 0;
@@ -30,7 +29,7 @@ int	colorizer(t_complex z, int n, t_mlx mlx)
 	return (*(int *)(unsigned char [4]){r, g, b, 0});
 }
 
-int	(*choose_fractal(t_mlx mlx))(t_complex z, t_mlx mlx)
+static int	(*choose_fractal(t_mlx mlx))(t_complex z, t_mlx mlx)
 {
 	if (mlx.frac_type == 1)
 		return (*mandelbrot);
@@ -38,6 +37,8 @@ int	(*choose_fractal(t_mlx mlx))(t_complex z, t_mlx mlx)
 		return (*julia);
 	if (mlx.frac_type == 3)
 		return (*burning_ship);
+	if (mlx.frac_type == 4)
+		return (*tricorn);
 	exit(0);
 }
 

@@ -6,13 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 19:36:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/26 20:59:40 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/01/27 19:49:31 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	error_msg(int mode)
+static void	error_msg(int mode)
 {
 	if (mode == 0)
 		printf("Error! No agruments at all.\n");
@@ -23,18 +23,50 @@ void	error_msg(int mode)
 	exit(0);
 }
 
-void	choose_fractal(char *arg, t_mlx *mlx)
+static void	input_fractal(char **argv, int *i, t_mlx *mlx, int argc)
 {
-	if (ft_strncmp(arg, "Mandelbrot", 10) == 0)
+	if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0)
 		mlx->frac_type = 1;
-	else if (ft_strncmp(arg, "Julia", 5) == 0)
+	else if (ft_strncmp(argv[1], "Julia", 5) == 0)
 		mlx->frac_type = 2;
-	else if (ft_strncmp(arg, "BurningShip", 11) == 0)
+	else if (ft_strncmp(argv[1], "BurningShip", 11) == 0)
 		mlx->frac_type = 3;
+	else if (ft_strncmp(argv[1], "Tricorn", 11) == 0)
+		mlx->frac_type = 4;
+	//
+	//
 	else
 	{
 		error_msg(1);
-		mlx->frac_type = 0;
+		exit(0);
+	}
+	if (mlx->frac_type == 2 && argc > 3)
+	{
+		if (ft_strncmp(argv[*i], "default", 7) == 0)
+			(*i)++;
+		else
+		{
+			mlx->julia_const.real = simple_atof(argv[(*i)++]);
+			mlx->julia_const.img = simple_atof(argv[(*i)++]);
+		}
+	}
+}
+
+static void	input_colors(char **argv, int *i, t_mlx *mlx, int argc)
+{
+	if (argc > (*i))
+	{
+		if (ft_strncmp(argv[*i], "default", 7) == 0)
+		{
+			set_default_colors(mlx);
+			(*i)++;
+		}
+		else if (argc > *i)
+		{
+			mlx->color_r = abs(ft_atoi(argv[(*i)++])) % 256 + 1;
+			mlx->color_g = abs(ft_atoi(argv[(*i)++])) % 256 + 1;
+			mlx->color_b = abs(ft_atoi(argv[(*i)++])) % 256 + 1;
+		}
 	}
 }
 
@@ -44,20 +76,14 @@ void	input_handler(int argc, char **argv, t_mlx *mlx)
 
 	if (argc < 2)
 		error_msg(0);
-	choose_fractal(argv[1], mlx);
 	i = 2;
-	if (mlx->frac_type == 2 && argc > 3)
-	{
-		// Считать значения для фрактала Жулиа + добавить default
-	}
+	input_fractal(argv, &i, mlx, argc);
+	input_colors(argv, &i, mlx, argc);
 	if (argc > i)
 	{
 		if (ft_strncmp(argv[i], "default", 7) == 0)
-			set_default_colors(mlx);
-		mlx->frac_type = 2;
-	}
-	if (argc > i + 2)
-	{
-
+			++i;
+		else
+			mlx->max_iter = abs(ft_atoi(argv[i++])) % 500;
 	}
 }
