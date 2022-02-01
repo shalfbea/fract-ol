@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 11:11:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/27 21:16:08 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:40:11 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # ifndef SCALE_FACTOR
 #  define SCALE_FACTOR 3
 # endif
+# ifndef SCALE_ITER
+#  define SCALE_ITER 10
+# endif
 # ifndef MOVING_FACTOR
 #  define MOVING_FACTOR 200
 # endif
@@ -42,7 +45,10 @@
 # define PLUS 24
 # define MINUS 27
 # define R_KEY 15
+# define L_KEY 37
+# define K_KEY 40
 # define SPACE 49
+# define N_KEY 45
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2
 # define WHEEL_DOWN 4
@@ -59,8 +65,8 @@ typedef struct s_img
 
 typedef struct s_complex
 {
-	double	real;
-	double	img;
+	long double	real;
+	long double	img;
 }	t_complex;
 
 typedef struct s_mlx
@@ -70,37 +76,28 @@ typedef struct s_mlx
 	t_img			img;
 	int				max_iter;
 	char			frac_type;
-	double			center_x;
-	double			center_y;
-	double			scale;
+	long double			center_x;
+	long double			center_y;
+	long double			scale;
 	int				color_r;
 	int				color_g;
 	int				color_b;
 	t_complex		julia_const;
 }		t_mlx;
 
-//To delete
-int			ft_printf(const char *str, ...);
-//fractals.c
 int			mandelbrot(t_complex	z, t_mlx mlx);
 int			julia(t_complex	z, t_mlx mlx);
 int			burning_ship(t_complex	z, t_mlx mlx);
 int			tricorn(t_complex	z, t_mlx mlx);
-
-//render.c
 int			colorizer(t_complex z, int n, t_mlx mlx);
 void		draw_fractal(t_mlx mlx);
-//controls.c
 int			key_controls(int key, t_mlx *mlx);
 int			mouse_controls(int button, int x, int y, t_mlx *mlx);
-//main.c
 int			mlx_close(t_mlx *mlx);
 int			rerender(t_mlx *mlx);
-int			init_params(t_mlx *mlx);
-void		set_default_colors(t_mlx *mlx);
-//inputs.c
+int			init_params(t_mlx *mlx, char next_frac);
+void		set_colors(t_mlx *mlx, int mode);
 void		input_handler(int argc, char **argv, t_mlx *mlx);
-//ft_strings.c
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_atoi(const char *str);
 double		simple_atof(const char *str);

@@ -6,13 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:38:10 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/27 21:14:55 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:13:34 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static int	colorizer(t_complex z, int n, t_mlx mlx)
+int	colorizer(t_complex z, int n, t_mlx mlx)
 {
 	double			a;
 	unsigned char	r;
@@ -58,7 +58,7 @@ void	draw_fractal(t_mlx mlx)
 		while (++x < WINDOW_W)
 		{
 			z.real = ((x - WINDOW_W / 2) / mlx.scale + mlx.center_x);
-			mlx.img.data[y * WINDOW_W + x] =  fractal(z, mlx);
+			mlx.img.data[y * WINDOW_W + x] = fractal(z, mlx);
 		}
 		x = 0;
 	}

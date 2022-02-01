@@ -15,10 +15,10 @@ OBJ = $(patsubst %.c, %.o, $(SRC_FILES))
 
 RM := rm -rf
 
-all: $(HEADER) $(NAME) $(OBJ)
+all: $(HEADER) $(NAME) $(OBJ) $(LIBMLX)
 
-$(NAME): $(OBJ) $(HEADER)
-	$(CC) $(OBJ) -framework OpenGL -framework AppKit libftprintf.a libmlx.a -o $(NAME)
+$(NAME): $(OBJ) $(HEADER) libmlx.a
+	$(CC) $(OBJ) -framework OpenGL -framework AppKit libmlx.a -o $(NAME)
 #$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit libftprintf.a libmlx.a -o $(NAME)
 
 bonus : $(NAME)
@@ -27,6 +27,9 @@ bonus : $(NAME)
 	$(CC) $(FLAGS) -c $< -o $@
 
 testing : test
+
+libmlx.a :
+	make -C $(LIBMLX)
 
 clean:
 	$(RM) $(OBJ)

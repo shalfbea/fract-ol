@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 10:52:47 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/27 21:10:59 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:13:16 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,35 @@ int	mlx_close(t_mlx *mlx)
 	exit(0);
 }
 
-void	set_default_colors(t_mlx *mlx)
+void	set_colors(t_mlx *mlx, int mode)
 {
-	mlx->color_r = 5;
-	mlx->color_g = 3;
-	mlx->color_b = 2;
+	if (mode == 0)
+	{
+		mlx->color_r = 5;
+		mlx->color_g = 3;
+		mlx->color_b = 2;
+	}
+	else
+	{
+		mlx->color_r = (mlx->color_r + 5) % 12;
+		mlx->color_g = (mlx->color_g + 3) % 14;
+		mlx->color_b = (mlx->color_b + 6) % 17;
+	}
 }
 
-int	init_params(t_mlx *mlx)
+int	init_params(t_mlx *mlx, char next_frac)
 {
-	mlx->scale = 200;
+	if (next_frac)
+		mlx->frac_type = mlx->frac_type % 4 + 1;
+	else
+		mlx->frac_type = 1;
+	mlx->scale = 100;
 	mlx->center_x = 0.0;
 	mlx->center_y = 0.0;
 	mlx->max_iter = INIT_MAX_ITER;
 	mlx->julia_const.img = 0.756;
 	mlx->julia_const.real = -0.1244;
-	set_default_colors(mlx);
+	set_colors(mlx, 0);
 	return (0);
 }
 
@@ -50,23 +63,12 @@ int	rerender(t_mlx *mlx)
 	return (0);
 }
 
-void	debug_info(t_mlx *mlx)
-{
-	printf("Max iter: %d\n", mlx->max_iter);
-	printf("frac_type: %d\n", mlx->frac_type);
-	printf("center x, y: %f %f\n", mlx->center_x, mlx->center_y);
-	printf("Scale: %f\n", mlx->scale);
-	printf("RGB: %d %d %d\n", mlx->color_r, mlx->color_g, mlx->color_b);
-	printf("Julia const: %f %f\n", mlx->julia_const.real, mlx->julia_const.img);
-}
-
 int	main(int argc, char **argv)
 {
 	t_mlx	mlx;
 
-	init_params(&mlx);
+	init_params(&mlx, 0);
 	input_handler(argc, argv, &mlx);
-	DebugInfo(&mlx);
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WINDOW_W, WINDOW_H, "fractol");
 	mlx.img.img_ptr = mlx_new_image(mlx.mlx, WINDOW_W, WINDOW_H);

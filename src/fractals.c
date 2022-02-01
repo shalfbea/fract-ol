@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 12:37:31 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/27 18:32:23 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/02/01 10:25:53 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	mandelbrot(t_complex	z, t_mlx mlx)
 	}
 	if (iter >= mlx.max_iter)
 		return (0x000000);
-	tmp = iter / mlx.max_iter;
 	return (colorizer(z, iter, mlx));
 }
 
@@ -47,7 +46,6 @@ int	julia(t_complex	z, t_mlx mlx)
 	}
 	if (iter >= mlx.max_iter)
 		return (0x000000);
-	tmp = iter / mlx.max_iter;
 	return (colorizer(z, iter, mlx));
 }
 
@@ -64,11 +62,10 @@ int	burning_ship(t_complex	z, t_mlx mlx)
 	{
 		tmp = z.real;
 		z.real = pow(z.real, 2) - pow(z.img, 2) + c.real;
-		z.img = fabs(2 * z.img * tmp) + c.img;
+		z.img = fabsl(2 * z.img * tmp) + c.img;
 	}
 	if (iter >= mlx.max_iter)
 		return (0x000000);
-	tmp = iter / mlx.max_iter;
 	return (colorizer(z, iter, mlx));
 }
 
@@ -89,6 +86,5 @@ int	tricorn(t_complex	z, t_mlx mlx)
 	}
 	if (iter >= mlx.max_iter)
 		return (0x000000);
-	tmp = iter / mlx.max_iter;
 	return (colorizer(z, iter, mlx));
 }

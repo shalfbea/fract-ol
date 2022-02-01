@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:39:34 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/01/27 21:14:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:11:45 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,8 @@ static void	moving(int key, t_mlx *mlx)
 		mlx->center_x += (double)(MOVING_FACTOR) / (mlx->scale);
 }
 
-static int	debug_info(t_mlx *mlx)
-{
-	mlx_string_put(mlx->mlx, mlx->win, 50, 50, 0xFF0000, "kek");
-	return (0);
-}
-
 int	key_controls(int key, t_mlx *mlx)
 {
-	ft_printf("Pressed key: %d\n", key);
 	if (key == 53)
 		mlx_close(mlx);
 	else if (key == PLUS)
@@ -40,15 +33,19 @@ int	key_controls(int key, t_mlx *mlx)
 	else if (key == MINUS)
 		mlx->scale /= SCALE_FACTOR;
 	else if (key == R_KEY)
-		init_params(mlx);
+		init_params(mlx, 0);
 	else if (key > 122 && key < 127)
 		moving(key, mlx);
+	else if (key == SPACE)
+		set_colors(mlx, 1);
+	else if (key == L_KEY)
+		mlx->max_iter += 500;
+	else if (key == K_KEY && mlx->max_iter >= 600)
+		mlx->max_iter -= 500;
+	else if (key == N_KEY)
+		init_params(mlx, 1);
 	else
-	{
-		if (key == SPACE)
-			debug_info(mlx);
 		return (0);
-	}
 	rerender(mlx);
 	return (1);
 }
@@ -60,16 +57,12 @@ int	mouse_controls(int button, int x, int y, t_mlx *mlx)
 	if (button == MOUSE_LEFT || button == WHEEL_DOWN)
 	{
 		mlx->scale *= SCALE_FACTOR;
-		if (mlx->max_iter < 200)
-			mlx->max_iter = INIT_MAX_ITER;
-		mlx->max_iter += 5;
+		mlx->max_iter += SCALE_ITER;
 	}
 	if (button == MOUSE_RIGHT || button == WHEEL_UP)
 	{
 		mlx->scale /= SCALE_FACTOR;
-		if (mlx->max_iter > 200)
-			mlx->max_iter = INIT_MAX_ITER;
-		mlx->max_iter -= 5;
+		mlx->max_iter -= SCALE_ITER;
 	}
 	rerender(mlx);
 	return (1);
