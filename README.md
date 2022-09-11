@@ -5,7 +5,7 @@ This project is about creating graphically beautiful fractals.
 
 ## About
 
-This project is part of program in School 21 (Ecole 42).
+This project is part of program in [School 21](https://21-school.ru/) ([Ecole 42](42.fr)).
 This will be the opportunity for you to get familiar with the MiniLibX, to discover or use the mathematical notion of complex numbers, to take a peek at the concept of optimization in computer graphics and practice event handling.
 
 ## Requirements
